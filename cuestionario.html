@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario</title>
+    <link rel="stylesheet" href="style.html">
+</head>
+
+<body>
+    <label>Pregunta</label><input>
+    <input type="radio" id="verdadero" name="respuesta" value="verdadero">
+    <label for="html">Verdadero</label><br>
+    <input type="radio" id="falso" name="respuesta" value="falso">
+    <label for="css">Falso</label><br>
+    <p>Puntuación</p><input>
+    <label>
+        <input type="radio" name="respuesta" value="verdadero" required>
+        Verdadero
+    </label><br>
+
+    <label>
+        <input type="radio" name="respuesta" value="falso">
+        Falso
+    </label><br>
+    <button>Atrás</button>
+    <button disabled>Grabar</button>
+
+    <h1 hidden>Cargando preguntas...</h1>
+
+    <table hidden>
+        <tr>
+            <th>Pregunta</th>
+            <th>Respuesta</th>
+            <th>Puntuación</th>
+            <th>Estado</th>
+        </tr>
+        <tr>
+            <td>Alfreds Futterkiste</td>
+            <td>Maria Anders</td>
+            <td>Germany</td>
+        </tr>
+        <tr>
+            <td>Centro comercial Moctezuma</td>
+            <td>Francisco Chang</td>
+            <td>Mexico</td>
+        </tr>
+    </table>
+</body>
+
+</html>

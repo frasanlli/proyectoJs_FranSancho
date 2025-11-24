@@ -1,0 +1,20 @@
+h1{
+    text-align: center;
+    margin: 25%;
+}
+
+p{
+    text-align: center;
+}
+
+table{
+    width: 100%;
+}
+
+button{
+    padding: 10px;
+}
+
+#inicioSesion{
+    visibility: hidden
+}
