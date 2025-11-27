@@ -1,40 +1,84 @@
+//variable para controlar pulsado del Ctrl
+let controlPulsado = false
+//variable para detectar modificación de pantalla tras temporizado
+let pantallaModificada = false
+//variable global temporizador sin asignar valor
+let temporizador
+
 window.addEventListener("DOMContentLoaded", () => {
-  const textoBotones = document.getElementById("textoBotones");
-  const inicioSesion = document.getElementById("inicioSesion");
+  //temporizador de 5 segundos
+  temporizador = setTimeout(() => {
+    pantallaModificada = modificarInicio()
+  }, 5000);
+
 });
 
-let controlPulsado = false
-
 window.addEventListener("keydown", (tecla) => {
-  console.log(tecla.key);
-  if (tecla.key == "Control"){
-        controlPulsado = true
-    }
+  console.log(pantallaModificada);
+  if(!pantallaModificada){
+    console.log(tecla.key);
+    //Si el control se ha pulsado se activa la variable
+    if (tecla.key == "Control"){
+          controlPulsado = true
+      }
 
-  if (controlPulsado && tecla.key == "F10"){
-    textoBotones.remove()
-    const label = document.createElement("label")
-    label.textContent = "Usuario"
-    const input = document.createElement("input")
-    document.body.appendChild(label)
-    document.body.appendChild(input)
-    /*cambiarOculto(textoBotones);
-    cambiarOculto(inicioSesion);*/
+    //Si el control se ha pulsado y se detecta que se pulsa la tecla F!0
+    if (controlPulsado && tecla.key == "F10"){
+      clearTimeout(temporizador)
+      modificarInicio()
+    }
   }
 });
 
 window.addEventListener("keyup", (tecla) => {
+  //Si el control se deja de pulsar se desactiva la variable
     if (tecla.key == "Control"){
         controlPulsado = false
     }
 })
 
-function cambiarOculto(elemento) {
-  //const test = document.getElementById("")
-  console.log(elemento.style.visibility)
-  if (elemento.style.visibility == "hidden") {
-    elemento.style.visibility = "visible";
+window.addEventListener("focus",
+    //if (pantallaModificada){
+      checkMail()
+    //}
+)
+
+function modificarInicio(){
+  //Detectamos elemento a eliminar
+  const textoBotones = document.getElementById("textoBotones");
+  //Eliminar el el elemento html a sustituir
+  textoBotones.remove()
+  //Crear sustitutos
+  const div = document.createElement("div")
+  const label = document.createElement("label")
+  const br = document.createElement("br")
+  const input = document.createElement("input")
+  const errorLabel = document.createElement("label")
+
+  div.classList.add("inicioSesion")
+  label.textContent = "Usuario"
+  input.id = "inputEmail"
+  errorLabel.id = "errorLabel"
+
+  document.body.appendChild(div)
+  div.appendChild(label)
+  div.appendChild(br)
+  div.appendChild(input)
+  div.appendChild(errorLabel)
+
+  return true
+}
+
+function checkMail() {
+  const inputEmail = document.getElementById("inputEmail");
+  const errorEmail = document.getElementById("errorLabel").value;
+  const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (emailCheck.test(inputEmail)) {
+    errorEmail.textContent = "";
+    return true;
   } else {
-    elemento.style.visibility = "hidden";
+    errorEmail.textContent = "El formato del email debe ser xxxx@yyyy.zzzz";
+    return false;
   }
 }
