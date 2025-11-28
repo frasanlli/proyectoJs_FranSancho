@@ -34,3 +34,13 @@ button{
 #errorLabel{
     color: red;
 }
+
+.bienvenida{
+    margin-top: 20vh;
+    margin-bottom: 5vh;
+}
+
+.preguntas{
+    text-align: center;
+    margin-left: 40vh;
+}
