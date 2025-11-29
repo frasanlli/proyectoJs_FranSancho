@@ -2,13 +2,17 @@ window.addEventListener("DOMContentLoaded", () => {
     let usuarioActual = document.getElementById("correo")
 
     usuarioActual.textContent = `Hola ${obtenerValorCookie("usuarioActual=")}.`
-    ultimaVisita.textContent = `La última vez que entraste fue el ${obtenerValorCookie("lastVisit=")}.`
+    ultimaVisita.textContent = `La última vez que entraste fue el ${obtenerTiempoCookie("lastVisit=")}
+                                a las ${obtenerFechaCookie("lastVisit=")}.`
+})
 
+document.getElementById("cuestionario").addEventListener("click", () => {
+    location.replace("cuestionario.html")
 })
 
 function obtenerValorCookie (clave){
     //document.cookie = `username=John Doe`;
-    //document.cookie = `lastVisit=06-05-2025`
+    //document.cookie = `lastVisit=${new Date()};`
     console.log(document.cookie)
 
     var arrayCookie = document.cookie.split(";");
@@ -20,8 +24,27 @@ function obtenerValorCookie (clave){
             valor = arrayCookie[i].substring(clave.length, arrayCookie[i].length)
             console.log(clave.length)
             console.log(arrayCookie[i].length)
-            //hay que corregir que salga un espacio y poner guardado de fecha de inicio de alguna forma
+            if (valor[0] == "="){
+                console.log("cortando")
+                valor = valor.slice(1, valor.length);
+            }
         }
     }
+    console.log(valor)
     return valor
+}
+
+function obtenerTiempoCookie (clave){
+    //new Date().toLocaleTimeString()
+    var fechaHora = new Date(obtenerValorCookie(clave))
+
+    return fechaHora.toLocaleTimeString()
+
+}
+
+function obtenerFechaCookie (clave){
+    //new Date().toLocaleDateString()
+    var fechaHora = new Date(obtenerValorCookie(clave))
+
+    return fechaHora.toLocaleDateString()
 }
