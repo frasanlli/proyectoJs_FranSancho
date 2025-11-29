@@ -9,44 +9,75 @@
 </head>
 
 <body>
-    <label>Pregunta</label><input>
-    <input type="radio" id="verdadero" name="respuesta" value="verdadero">
-    <label for="html">Verdadero</label><br>
-    <input type="radio" id="falso" name="respuesta" value="falso">
-    <label for="css">Falso</label><br>
-    <p>Puntuación</p><input>
-    <label>
-        <input type="radio" name="respuesta" value="verdadero" required>
-        Verdadero
-    </label><br>
+    <form class="cuestionario">
+        <div class="izquierda">
+            <table>
+                <tr>
+                    <td>
+                        <label>Pregunta </label>
+                    </td>
+                    <td>
+                        <input id="pregunta">
+                    </td>
+                </tr>
+                <tr class="botones">
+                    <td>
+                        <label>
+                            Verdadero
+                            <input class="respuesta" type="radio" name="respuesta" value="verdadero" required>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            Falso<input class="respuesta" type="radio" name="respuesta" value="falso">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Puntuación </label>
+                    </td>
+                    <td>
+                        <input id="puntos">
+                    </td>
+                </tr>
 
-    <label>
-        <input type="radio" name="respuesta" value="falso">
-        Falso
-    </label><br>
-    <button>Atrás</button>
-    <button disabled>Grabar</button>
+                <tr class="botones">
+                    <td>
+                        <button id="atras">Atrás</button>
+                    </td>
+                    <td>
+                        <button id="grabar" disabled>Grabar</button>
+                    </td>
+                </tr>
 
-    <h1 hidden>Cargando preguntas...</h1>
+            </table>
+        </div>
 
-    <table hidden>
-        <tr>
-            <th>Pregunta</th>
-            <th>Respuesta</th>
-            <th>Puntuación</th>
-            <th>Estado</th>
-        </tr>
-        <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-        </tr>
-        <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-        </tr>
-    </table>
+
+        <div class="derecha">
+            <h1 hidden>Cargando preguntas...</h1>
+
+            <table>
+                <tr>
+                    <th>Pregunta</th>
+                    <th>Respuesta</th>
+                    <th>Puntuación</th>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Verdadero</td>
+                    <td class="puntuacion">2</td>
+                </tr>
+                <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Falso</td>
+                    <td class="puntuacion">1</td>
+                </tr>
+            </table>
+        </div>
+    </form>
 </body>
+<script src="cuestionario.js"></script>
 
 </html>

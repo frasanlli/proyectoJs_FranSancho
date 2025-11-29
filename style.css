@@ -44,3 +44,35 @@ button{
     text-align: center;
     margin-left: 40vh;
 }
+
+.cuestionario{
+    display: flex;
+    min-width: 70vh;
+}
+
+.izquierda{
+    padding-right: 20px;
+    width: 50%;
+    border-right: 1px solid grey;
+    & table tr{
+        height: 40px;
+
+    }
+    & #pregunta, #puntos {
+        width: 100%;
+        }
+    & .botones {
+        text-align: center;
+        & button {
+            width: 10vh;
+        }
+    }
+}
+.derecha{
+    width: 50%;
+    border-left: 1px solid grey;
+    padding-left: 20px;
+    & .puntuacion{
+        text-align: center;
+    }
+}

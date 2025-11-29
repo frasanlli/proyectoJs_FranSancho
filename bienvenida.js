@@ -11,7 +11,6 @@ document.getElementById("cuestionario").addEventListener("click", () => {
 })
 
 function obtenerValorCookie (clave){
-    //document.cookie = `username=John Doe`;
     //document.cookie = `lastVisit=${new Date()};`
     console.log(document.cookie)
 
