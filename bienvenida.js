@@ -10,7 +10,7 @@ document.getElementById("cuestionario").addEventListener("click", () => {
     location.replace("cuestionario.html")
 })
 
-function obtenerValorCookie (clave){
+export function obtenerValorCookie (clave){
     //document.cookie = `lastVisit=${new Date()};`
     console.log(document.cookie)
 
