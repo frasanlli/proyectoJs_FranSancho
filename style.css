@@ -72,7 +72,7 @@ button{
     width: 50%;
     border-left: 1px solid grey;
     padding-left: 20px;
-    & .puntuacion{
+    & .puntuacion, .estado{
         text-align: center;
     }
 }

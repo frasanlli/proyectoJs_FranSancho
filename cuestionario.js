@@ -6,12 +6,23 @@ document.getElementById("grabar").addEventListener("click", () => {
   manejarFormulario(true);
 });
 
+document.getElementById("formulario").addEventListener("submit", (e) => {
+  e.preventDefault();
+  document.getElementById("formulario").reset()
+});
+
+
 window.addEventListener("change", () => {
   checkFormulario();
 });
 
+let loaded = false
 window.addEventListener("DOMContentLoaded", () => {
-  obtenerPreguntas();
+  if (!loaded){
+    obtenerPreguntas();
+    loaded=true
+  }
+
 });
 
 let puntos = document.getElementById("puntos");
@@ -116,7 +127,7 @@ function obtenerPreguntas() {
 
 }
 
-function mostrarPreguntas(pregunta) {
+function mostrarPreguntas(pregunta, guardar = false) {
   console.log("mostrarPreguntas");
   const tablaPreguntas = document.getElementById("tablaPreguntas");
   const fila = document.createElement("tr");
@@ -133,11 +144,17 @@ function mostrarPreguntas(pregunta) {
       dato.classList.add("puntuacion")
     }
   }
-
-  return true
+  var dato = document.createElement("td");
+  fila.appendChild(dato);
+  if (guardar){
+    dato.textContent = "guardando...";
+  }else{
+    dato.textContent = "OK";
+  }
+  dato.classList.add("estado")
 }
 
-function grabarFormulario(inputPregunta, respuesta, inputPuntos) {
+async function grabarFormulario(inputPregunta, respuesta, inputPuntos) {
   console.log(
     "grabando... inputPregunta= " +
       inputPregunta +
@@ -146,14 +163,41 @@ function grabarFormulario(inputPregunta, respuesta, inputPuntos) {
       "/ inputPuntos=" +
       inputPuntos
   );
+  var n = 1
   var numPreguntas = Number(obtenerValorCookie("numPreguntas="));
+  var pregunta = `${inputPregunta}/${respuesta}/${inputPuntos}`
 
   if (numPreguntas) {
-    var n = numPreguntas + 1;
-    document.cookie = `pregunta${n} = ${inputPregunta}/${respuesta}/${inputPuntos}`;
-    document.cookie = `numPreguntas = ${n}`;
-  } else {
-    document.cookie = `numPreguntas = 1`;
-    document.cookie = `pregunta1 = ${inputPregunta}/${respuesta}/${inputPuntos}`;
+    n = numPreguntas + 1;
   }
+    console.log("guardando...");
+    //mostrar en la tabla
+    mostrarPreguntas(pregunta, true)
+
+    try {
+      //obtengo el ultimo elemento de la tabla
+      var cantidad = document.getElementsByClassName("estado").length
+      var estado = document.getElementsByClassName("estado")[cantidad - 1]
+
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          document.cookie = `pregunta${n}=${pregunta}`;
+          document.cookie = `numPreguntas=${n}`;
+          estado.textContent = "OK"
+          resolve("Cookies guardadas");
+
+        } catch (e) {
+          estado.textContent = "ERROR"
+          reject(e);
+        }
+      }, 5000);
+    });
+    console.log("Guardado correctamente");
+
+    } catch (e) {
+      estado.textContent = "ERROR"
+      reject(e);
+    }
+
 }
