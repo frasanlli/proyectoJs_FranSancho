@@ -9,8 +9,8 @@
 </head>
 
 <body>
-    <form class="cuestionario">
-        <div class="izquierda">
+    <div class="cuestionario">
+        <form class="izquierda">
             <table>
                 <tr>
                     <td>
@@ -52,31 +52,21 @@
                 </tr>
 
             </table>
-        </div>
-
-
+        </form>
         <div class="derecha">
             <h1 hidden>Cargando preguntas...</h1>
 
             <table>
+                <tbody id="tablaPreguntas">
                 <tr>
                     <th>Pregunta</th>
                     <th>Respuesta</th>
                     <th>Puntuación</th>
                 </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Verdadero</td>
-                    <td class="puntuacion">2</td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Falso</td>
-                    <td class="puntuacion">1</td>
-                </tr>
+                </tbody>
             </table>
         </div>
-    </form>
+    </div>
 </body>
 <script src="cuestionario.js"></script>
 

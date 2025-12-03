@@ -1,16 +1,4 @@
-window.addEventListener("DOMContentLoaded", () => {
-    let usuarioActual = document.getElementById("correo")
-
-    usuarioActual.textContent = `Hola ${obtenerValorCookie("usuarioActual=")}.`
-    ultimaVisita.textContent = `La última vez que entraste fue el ${obtenerTiempoCookie("lastVisit=")}
-                                a las ${obtenerFechaCookie("lastVisit=")}.`
-})
-
-document.getElementById("cuestionario").addEventListener("click", () => {
-    location.replace("cuestionario.html")
-})
-
-export function obtenerValorCookie (clave){
+function obtenerValorCookie (clave){
     //document.cookie = `lastVisit=${new Date()};`
     console.log(document.cookie)
 
@@ -32,6 +20,19 @@ export function obtenerValorCookie (clave){
     console.log(valor)
     return valor
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+    let usuarioActual = document.getElementById("correo")
+
+    usuarioActual.textContent = `Hola ${obtenerValorCookie("usuarioActual=")}.`
+    ultimaVisita.textContent = `La última vez que entraste fue el ${obtenerTiempoCookie("lastVisit=")}
+                                a las ${obtenerFechaCookie("lastVisit=")}.`
+})
+
+document.getElementById("cuestionario").addEventListener("click", () => {
+    location.replace("cuestionario.html")
+})
+
 
 function obtenerTiempoCookie (clave){
     //new Date().toLocaleTimeString()
