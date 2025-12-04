@@ -1,18 +1,18 @@
-let colaGrabar = 0
+let colaGrabar = 0;
 
 document.getElementById("atras").addEventListener("click", () => {
   location.replace("bienvenida.html");
 });
 
 document.getElementById("grabar").addEventListener("click", () => {
-  colaGrabar++
-  controlarAtras ()
+  colaGrabar++;
+  controlarAtras();
   manejarFormulario(true);
 });
 
 document.getElementById("formulario").addEventListener("submit", (e) => {
   e.preventDefault();
-  document.getElementById("formulario").reset()
+  document.getElementById("formulario").reset();
   document.getElementById("grabar").disabled = true;
 });
 
@@ -20,13 +20,12 @@ window.addEventListener("change", () => {
   checkFormulario();
 });
 
-let loaded = false
+let loaded = false;
 window.addEventListener("DOMContentLoaded", () => {
-  if (!loaded){
+  if (!loaded) {
     obtenerPreguntas();
-    loaded=true
+    loaded = true;
   }
-
 });
 
 let puntos = document.getElementById("puntos");
@@ -115,28 +114,33 @@ function checkFormulario() {
   }
 }
 
+
 function obtenerPreguntas() {
   console.log("obtenerPreguntas");
   var numPreguntas = Number(obtenerValorCookie("numPreguntas="));
   if (numPreguntas) {
-    console.log("hay preguntas")
+    console.log("hay preguntas");
     for (var i = 0; i < numPreguntas; i++) {
-      var pregunta = obtenerValorCookie(`pregunta${i+1}=`);
-      console.log(`pregunta${i+1}= `+ pregunta)
+      var pregunta = obtenerValorCookie(`pregunta${i + 1}=`);
+      console.log(`pregunta${i + 1}= ` + pregunta);
       mostrarPreguntas(pregunta);
     }
-  }else{
-    console.log("NO hay preguntas")
+  } else {
+    console.log("NO hay preguntas");
   }
-
 }
 
-function mostrarPreguntas(pregunta, guardar = false) {
+
+async function mostrarPreguntas(pregunta, guardar = false, retraso = false) {
+  if (retraso) {
+    cargandoTabla()
+  }
+
   console.log("mostrarPreguntas");
   const tablaPreguntas = document.getElementById("tablaPreguntas");
   const fila = document.createElement("tr");
   const datosPregunta = pregunta.split("/");
-  console.log("datosPregunta= "+ datosPregunta)
+  console.log("datosPregunta= " + datosPregunta);
   tablaPreguntas.appendChild(fila);
 
   for (var i = 0; i < datosPregunta.length; i++) {
@@ -144,19 +148,20 @@ function mostrarPreguntas(pregunta, guardar = false) {
     var dato = document.createElement("td");
     dato.textContent = datosPregunta[i];
     fila.appendChild(dato);
-    if (Number(datosPregunta[i])){
-      dato.classList.add("puntuacion")
+    if (Number(datosPregunta[i])) {
+      dato.classList.add("puntuacion");
     }
   }
   var dato = document.createElement("td");
   fila.appendChild(dato);
-  if (guardar){
+  if (guardar) {
     dato.textContent = "guardando...";
-  }else{
+  } else {
     dato.textContent = "OK";
   }
-  dato.classList.add("estado")
+  dato.classList.add("estado");
 }
+
 
 async function grabarFormulario(inputPregunta, respuesta, inputPuntos) {
   console.log(
@@ -167,54 +172,72 @@ async function grabarFormulario(inputPregunta, respuesta, inputPuntos) {
       "/ inputPuntos=" +
       inputPuntos
   );
-  var n = 1
+  var n = 1;
   var numPreguntas = Number(obtenerValorCookie("numPreguntas="));
-  var pregunta = `${inputPregunta}/${respuesta}/${inputPuntos}`
+  var pregunta = `${inputPregunta}/${respuesta}/${inputPuntos}`;
 
   if (numPreguntas) {
     n = numPreguntas + 1;
   }
-    console.log("guardando...");
-    //mostrar en la tabla
-    mostrarPreguntas(pregunta, true)
+  console.log("guardando...");
+  //mostrar en la tabla
+  mostrarPreguntas(pregunta, true);
 
-    try {
-      //obtengo el ultimo elemento de la tabla
-      var cantidad = document.getElementsByClassName("estado").length
-      var estado = document.getElementsByClassName("estado")[cantidad - 1]
+  try {
+    //obtengo el ultimo elemento de la tabla
+    var cantidad = document.getElementsByClassName("estado").length;
+    var estado = document.getElementsByClassName("estado")[cantidad - 1];
 
     await new Promise((resolve, reject) => {
       setTimeout(() => {
         try {
           document.cookie = `pregunta${n}=${pregunta}`;
           document.cookie = `numPreguntas=${n}`;
-          estado.textContent = "OK"
+          estado.textContent = "OK";
           resolve("Cookies guardadas");
-
         } catch (e) {
-          estado.textContent = "ERROR"
+          estado.textContent = "ERROR";
           reject(e);
         }
       }, 5000);
     });
     console.log("Guardado correctamente");
-
-    } catch (e) {
-      estado.textContent = "ERROR"
-      reject(e);
-    }
+  } catch (e) {
+    estado.textContent = "ERROR";
+    reject(e);
+  }
 
   //Restamos a la cola sin importar resultado y activamos funcion para controlar boton atras
-  colaGrabar--
-  controlarAtras ()
-
+  colaGrabar--;
+  controlarAtras();
 }
 
-function controlarAtras (){
-  console.log("controlarAtras= cola= "+ colaGrabar)
-  if (colaGrabar==0){
+
+function controlarAtras() {
+  console.log("controlarAtras= cola= " + colaGrabar);
+  if (colaGrabar == 0) {
     document.getElementById("atras").disabled = false;
-  }else{
+  } else {
     document.getElementById("atras").disabled = true;
   }
+}
+
+
+async function cargandoTabla() {
+  document.getElementById("tablaPreguntas").hidden = true;
+  document.getElementById("retraso").hidden = false;
+  await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        console.log("retraso activado");
+        document.getElementById("retraso").hidden = true;
+        document.getElementById("tablaPreguntas").hidden = false;
+        resolve("Cookies guardadas");
+      } catch (e) {
+        estado.textContent = "ERROR";
+        reject(e);
+      }
+    }, 5000);
+  });
+  console.log("FiN retraso activado");
 }
