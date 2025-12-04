@@ -1,16 +1,20 @@
+let colaGrabar = 0
+
 document.getElementById("atras").addEventListener("click", () => {
   location.replace("bienvenida.html");
 });
 
 document.getElementById("grabar").addEventListener("click", () => {
+  colaGrabar++
+  controlarAtras ()
   manejarFormulario(true);
 });
 
 document.getElementById("formulario").addEventListener("submit", (e) => {
   e.preventDefault();
   document.getElementById("formulario").reset()
+  document.getElementById("grabar").disabled = true;
 });
-
 
 window.addEventListener("change", () => {
   checkFormulario();
@@ -200,4 +204,17 @@ async function grabarFormulario(inputPregunta, respuesta, inputPuntos) {
       reject(e);
     }
 
+  //Restamos a la cola sin importar resultado y activamos funcion para controlar boton atras
+  colaGrabar--
+  controlarAtras ()
+
+}
+
+function controlarAtras (){
+  console.log("controlarAtras= cola= "+ colaGrabar)
+  if (colaGrabar==0){
+    document.getElementById("atras").disabled = false;
+  }else{
+    document.getElementById("atras").disabled = true;
+  }
 }
