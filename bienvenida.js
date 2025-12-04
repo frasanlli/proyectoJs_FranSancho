@@ -22,29 +22,25 @@ function obtenerValorCookie (clave){
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    let usuarioActual = document.getElementById("correo")
+    var usuario = obtenerValorCookie("usuarioActual=")
+    var clave = `${usuario}lastVisit=`
+    var usuarioActual = document.getElementById("correo")
+    var ultimaVisita = document.getElementById("ultimaVisita")
+    var fechaHora
 
-    usuarioActual.textContent = `Hola ${obtenerValorCookie("usuarioActual=")}.`
-    ultimaVisita.textContent = `La última vez que entraste fue el ${obtenerTiempoCookie("lastVisit=")}
-                                a las ${obtenerFechaCookie("lastVisit=")}.`
+    console.log(fechaHora)
+    usuarioActual.textContent = `Hola ${usuario}.`
+
+    if (!obtenerValorCookie(clave)){
+        ultimaVisita.textContent = "Es tu primera vez aquí :)"
+    }else{
+        fechaHora = new Date(obtenerValorCookie(clave))
+        ultimaVisita.textContent = `La última vez que entraste fue el ${fechaHora.toLocaleDateString()}
+                                a las ${fechaHora.toLocaleTimeString()}.`
+    }
+
 })
 
 document.getElementById("cuestionario").addEventListener("click", () => {
     location.replace("cuestionario.html")
 })
-
-
-function obtenerTiempoCookie (clave){
-    //new Date().toLocaleTimeString()
-    var fechaHora = new Date(obtenerValorCookie(clave))
-
-    return fechaHora.toLocaleTimeString()
-
-}
-
-function obtenerFechaCookie (clave){
-    //new Date().toLocaleDateString()
-    var fechaHora = new Date(obtenerValorCookie(clave))
-
-    return fechaHora.toLocaleDateString()
-}

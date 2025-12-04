@@ -1,4 +1,5 @@
 let colaGrabar = 0;
+let usuario = obtenerValorCookie("usuarioActual=")
 
 document.getElementById("atras").addEventListener("click", () => {
   location.replace("bienvenida.html");
@@ -20,12 +21,14 @@ window.addEventListener("change", () => {
   checkFormulario();
 });
 
-let loaded = false;
+
 window.addEventListener("DOMContentLoaded", () => {
-  if (!loaded) {
-    obtenerPreguntas();
-    loaded = true;
-  }
+  //Actualizamos cookie de última visita
+  const fechaActual = new Date();
+  document.cookie = `${usuario}lastVisit=${fechaActual};`
+  obtenerPreguntas();
+  loaded = true;
+
 });
 
 let puntos = document.getElementById("puntos");
@@ -54,7 +57,6 @@ puntos.addEventListener("input", function () {
 });
 
 function obtenerValorCookie(clave) {
-  //document.cookie = `lastVisit=${new Date()};`
   console.log(`obtenerValorCookie (${clave})`);
   console.log(document.cookie);
 
@@ -117,12 +119,12 @@ function checkFormulario() {
 
 function obtenerPreguntas() {
   console.log("obtenerPreguntas");
-  var numPreguntas = Number(obtenerValorCookie("numPreguntas="));
+  var numPreguntas = Number(obtenerValorCookie(`${usuario}numPreguntas=`));
   if (numPreguntas) {
     console.log("hay preguntas");
     for (var i = 0; i < numPreguntas; i++) {
-      var pregunta = obtenerValorCookie(`pregunta${i + 1}=`);
-      console.log(`pregunta${i + 1}= ` + pregunta);
+      var pregunta = obtenerValorCookie(`${usuario}pregunta${i + 1}=`);
+      console.log(`${usuario}pregunta${i + 1}= ` + pregunta);
       mostrarPreguntas(pregunta);
     }
   } else {
@@ -173,7 +175,7 @@ async function grabarFormulario(inputPregunta, respuesta, inputPuntos) {
       inputPuntos
   );
   var n = 1;
-  var numPreguntas = Number(obtenerValorCookie("numPreguntas="));
+  var numPreguntas = Number(obtenerValorCookie(`${usuario}numPreguntas=`));
   var pregunta = `${inputPregunta}/${respuesta}/${inputPuntos}`;
 
   if (numPreguntas) {
@@ -191,8 +193,8 @@ async function grabarFormulario(inputPregunta, respuesta, inputPuntos) {
     await new Promise((resolve, reject) => {
       setTimeout(() => {
         try {
-          document.cookie = `pregunta${n}=${pregunta}`;
-          document.cookie = `numPreguntas=${n}`;
+          document.cookie = `${usuario}pregunta${n}=${pregunta}`;
+          document.cookie = `${usuario}numPreguntas=${n}`;
           estado.textContent = "OK";
           resolve("Cookies guardadas");
         } catch (e) {
